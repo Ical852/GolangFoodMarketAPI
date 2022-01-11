@@ -1,0 +1,79 @@
+###User Get
+GET http://localhost:3000/api/user/get/1
+X-API-Key: RAHASIA
+Accept: application/json
+
+###User Login
+POST http://localhost:3000/api/user/login
+X-API-Key: RAHASIA
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username" : "egp08",
+  "password" : "12345678"
+}
+
+###User Register
+POST http://localhost:3000/api/user/register
+X-API-Key: RAHASIA
+Accept: application/json
+Content-Type: application/json
+
+{
+  "full_name" : "Shalahuddin Ahmad Aziz",
+  "username" : "testerApiGolang",
+  "password" : "12345678",
+  "email" : "ical@gmail.com",
+  "user_img" : "ical.jpg",
+  "phone_number" : "12345678",
+  "role_id" : 2,
+  "user_status" : 1
+}
+
+###User Update
+PUT http://localhost:3000/api/user/update/1
+X-API-Key: RAHASIA
+Accept: application/json
+Content-Type: application/json
+
+{
+  "full_name" : "ical aja jadinya",
+  "password" : "123456789",
+  "phone_number" : "123"
+}
+
+###Product Market
+GET http://localhost:3000/api/products/get/3
+X-API-Key: RAHASIA
+Accept: application/json
+
+###Product Detail
+GET http://localhost:3000/api/products/detail/2
+X-API-Key: RAHASIA
+Accept: application/json
+
+###Market Get
+GET http://localhost:3000/api/market/get
+X-API-Key: RAHASIA
+Accept: application/json
+
+###Market Get Random
+GET http://localhost:3000/api/market/getrand
+X-API-Key: RAHASIA
+Accept: application/json
+
+###Market Get Category
+GET http://localhost:3000/api/market/category/1
+X-API-Key: RAHASIA
+Accept: application/json
+
+###Market Search
+GET http://localhost:3000/api/market/search/sayur
+X-API-Key: RAHASIA
+Accept: application/json
+
+###Market Get Detail
+GET http://localhost:3000/api/market/detail/1
+X-API-Key: RAHASIA
+Accept: application/json
