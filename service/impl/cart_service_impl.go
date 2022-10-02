@@ -5,6 +5,7 @@ import (
 	"Go-FoodMarket/helper/response"
 	"Go-FoodMarket/model/domain"
 	"Go-FoodMarket/model/web/cart"
+	"Go-FoodMarket/model/web/transaction"
 	"Go-FoodMarket/repository/repository"
 	"Go-FoodMarket/service/service"
 	"context"
@@ -70,3 +71,41 @@ func (service *CartServiceImpl) Delete(ctx context.Context, request cart.CartDel
 
 	service.CartRepository.Delete(ctx, tx, cart)
 }
+
+func (service *CartServiceImpl) Transaction(ctx context.Context, request transaction.TransactionCreateRequest) transaction.TransactionResponse {
+	err := service.Validate.Struct(request)
+	helper.PanicIfError(err)
+
+	tx, err := service.DB.Begin()
+	helper.PanicIfError(err)
+	defer helper.CommitOrRollback(tx)
+
+	transaction := domain.Transaction{
+		OrderId: request.OrderId,
+		GrossAmount: request.GrossAmount,
+		UserId: request.UserId,
+		ProductId: request.ProductId,
+		Status: request.Status,
+	}
+
+
+	user := domain.User{
+		FullName: request.FullName,
+		Email: request.Email,
+		PhoneNumber: request.Phone,
+	}
+
+	transaction = service.CartRepository.Transaction(ctx, tx, transaction, user)
+	return response.ToTransactionResponse(transaction)
+}
+
+func (service *CartServiceImpl) GetTransaction(ctx context.Context, userId int) []transaction.TransactionResponse {
+	tx, err := service.DB.Begin()
+	helper.PanicIfError(err)
+	defer helper.CommitOrRollback(tx)
+
+	transactions := service.CartRepository.GetTransaction(ctx, tx, userId)
+
+	return response.ToTransactionResponses(transactions)
+}
+

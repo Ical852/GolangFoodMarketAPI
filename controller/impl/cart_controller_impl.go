@@ -5,6 +5,7 @@ import (
 	"Go-FoodMarket/helper"
 	"Go-FoodMarket/model/web"
 	"Go-FoodMarket/model/web/cart"
+	"Go-FoodMarket/model/web/transaction"
 	"Go-FoodMarket/service/service"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
@@ -61,3 +62,32 @@ func (controller *CartControllerImpl) Delete(writer http.ResponseWriter, request
 
 	helper.WriteToResponseBody(writer, webResponse)
 }
+
+func (controller *CartControllerImpl) Transaction(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+	transactionRequest := transaction.TransactionCreateRequest{}
+	helper.ReadFromRequestBody(request, &transactionRequest)
+
+	transactionResponse := controller.CartService.Transaction(request.Context(), transactionRequest)
+	webResponse := web.WebResponse{
+		Code:   200,
+		Status: "OK",
+		Data:   transactionResponse,
+	}
+	helper.WriteToResponseBody(writer, webResponse)
+}
+
+func (controller *CartControllerImpl) GetTransaction(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+	userId := params.ByName("userId")
+	id, err := strconv.Atoi(userId)
+	helper.PanicIfError(err)
+
+	transactionResponse := controller.CartService.GetTransaction(request.Context(), id)
+	webResponse := web.WebResponse{
+		Code:   200,
+		Status: "OK",
+		Data:   transactionResponse,
+	}
+
+	helper.WriteToResponseBody(writer, webResponse)
+}
+

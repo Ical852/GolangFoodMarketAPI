@@ -69,6 +69,9 @@ func main() {
 	router.POST("/api/cart/add", cartController.Add)
 	router.POST("/api/cart/delete", cartController.Delete)
 
+	router.POST("/api/transaction", cartController.Transaction)
+	router.GET("/api/transaction/:userId", cartController.GetTransaction)
+
 	router.PanicHandler = exception.ErrorHandler
 
 	server := http.Server{
