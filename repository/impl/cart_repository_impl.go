@@ -24,6 +24,8 @@ func (repository *CartRepositoryImpl) Get(ctx context.Context, tx *sql.Tx, userI
 	helper.PanicIfError(err)
 	defer rows.Close()
 
+	print("dada")
+
 	var carts []domain.Cart
 	for rows.Next() {
 		cart := domain.Cart{}
